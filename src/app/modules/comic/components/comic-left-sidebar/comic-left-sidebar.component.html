@@ -1,0 +1,80 @@
+<div class="left-sidebar-wrapper sec-padding">
+<div class="container">
+  <div class="sidebar-wrapper" fxLayout='row' fxLayout.lt-md="column" >
+      <div fxFlex="25" fxFlex.lt-sm="100" class="filter-sidenav" perfectScrollbar>
+          <div class="toggles-wrapper" fxLayout="column" fxLayout.lt-md="column">
+              <div class="toggles" fxFlex.lt-md="100">
+                  <mat-accordion>
+                      <mat-expansion-panel expanded>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span>Search Comic by Character Appearances</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    <app-search-character (charactersForSearch)="getCharacters($event)"></app-search-character>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+              </div>
+          </div>
+
+          </div>
+        <div fxFlex="75" fxFlex.lt-sm="100" class="all-products" ngClass.gt-sm="p-left">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxHide.lt-md="true" class="filter-row mat-elevation-z1 text-muted">
+
+                <div >
+                  <mat-form-field>
+                    <mat-label>Order results</mat-label>
+                    <mat-select>
+                      <mat-option (click)="onChangeSorting('title')" value="title">Alphabetically, A-Z</mat-option>
+                      <mat-option (click)="onChangeSorting('-title')" value="-title">Alphabetically, Z-A</mat-option>
+                      <mat-option (click)="onChangeSorting('low')" value="low">Price, low to high</mat-option>
+                      <mat-option (click)="onChangeSorting('high')" value="high">Price, high to low</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+                <div>
+                  <mat-form-field appearance="legacy">
+                    <input matInput placeholder="Search by Comic Name" (keyup)="search($event.target.value)">
+                  </mat-form-field>
+                </div>
+                <div>
+
+                    <button mat-icon-button (click)="changeViewType('list', 100)">
+                        <mat-icon>view_list</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="changeViewType('list', 33.3)">
+                        <mat-icon>view_module</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="changeViewType('list', 25)">
+                        <mat-icon>view_comfy</mat-icon>
+                    </button>
+                </div>
+              </div>
+              <div *ngIf="comics.length > 0" fxLayout="row wrap ">
+                <div fxFlex="100">
+                    <mat-card class="p-0 text-center no-shadow">
+                        <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
+                    </mat-card>
+                </div>
+            </div>
+              <div fxLayout="row wrap" class="products-wrapper">
+                  <div *ngIf="allItemsCount < 1">Search has no results</div>
+                  <div *ngFor="let comic of allItems | orderBy:sortByOrder | paginate: { itemsPerPage: 20, currentPage: page, totalItems: allItemsCount  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+                     <div class="product-box">
+                        <app-comic-list [comic]="comic"></app-comic-list>
+                     </div>
+                  </div>
+              </div>
+
+              <div *ngIf="comics.length > 0" fxLayout="row wrap ">
+                  <div fxFlex="100">
+                      <mat-card class="p-0 text-center no-shadow">
+                          <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
+                      </mat-card>
+                  </div>
+              </div>
+            </div>
+  </div>
+</div>
+</div>

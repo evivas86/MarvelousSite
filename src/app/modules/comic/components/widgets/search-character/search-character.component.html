@@ -1,0 +1,14 @@
+<div class="category-contant">
+
+	<mat-form-field>
+		<input type="text" placeholder="Search..." matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addCharacter(option.id,option.name)">
+                  {{option.name}}
+                </mat-option>
+              </mat-autocomplete>
+    </mat-form-field>
+    <ul>
+        <li *ngFor="let character of characters; let i=index"><a fxLayoutAlign="space-between center" (click)="deleteCharacter(i)" class="search-character-list">{{character.name}} <mat-icon class="search-character-icon">delete</mat-icon></a></li>
+    </ul>
+</div>
