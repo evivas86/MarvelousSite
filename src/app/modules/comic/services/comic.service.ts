@@ -44,9 +44,18 @@ export class ComicService {
     return this.httpClient.get<ComicInterface>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&offset=' + offset + '&orderBy=' + sortByOrder + searchTerm + searchCharacter);
   }
 
+  private comic(id: number): Observable<ComicInterface> {
+    return this.httpClient.get<ComicInterface>(this.api + 'comics/' + id + '?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  }
+
     // Get Comics
     public getComics(offset: number, sortByOrder: string, term: string, characters: string): Observable<ComicInterface> {
       return this.comics(offset,sortByOrder,term,characters);
+    }
+
+    // Get Comics
+    public getComicById(id: number): Observable<ComicInterface> {
+      return this.comic(id);
     }
 
 

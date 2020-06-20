@@ -7,6 +7,7 @@ import { CartService } from 'src/app/modules/shared/services/cart.service';
 import { SwiperDirective, SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ProductZoomComponent } from './comic-zoom/product-zoom.component';
 import { DOCUMENT } from '@angular/common';
+import { ComicService } from '../../services/comic.service';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ComicDetailsComponent implements OnInit {
   @ViewChild(SwiperDirective, { static: true }) directiveRef: SwiperDirective;
 
   public product: Product;
+  public comic: any;
   public products: Product[] = [];
   public images: Product;
   public image: any;
@@ -32,9 +34,17 @@ export class ComicDetailsComponent implements OnInit {
   index: number;
   bigProductImageIndex = 0;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private route: ActivatedRoute, public productsService: ProductService, public dialog: MatDialog, private router: Router, private cartService: CartService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private route: ActivatedRoute, public productsService: ProductService, public dialog: MatDialog, private router: Router, private cartService: CartService, private comicService: ComicService) {
     this.route.params.subscribe(params => {
-      const id = +params['id'];
+      //const id = +params['id'];
+      const id = 1;
+
+      this.comicService.getComicById(+params['id']).subscribe(data => {
+        console.log(data.data.results[0]);
+        this.comic = data.data.results[0];
+
+         });
+
       this.productsService.getProduct(id).subscribe(product => {
         this.product = product
       });
@@ -189,6 +199,10 @@ export class ComicDetailsComponent implements OnInit {
       data: this.zoomImage,
       panelClass: 'zoom-dialog'
     });
+  }
+
+  public getImg(path: string,extension: string) {
+    return path +'.'+ extension;
   }
 
 
