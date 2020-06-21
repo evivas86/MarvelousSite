@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComicListComponent } from './components/comic-list/comic-list.component';
-import { ComicDetailsComponent } from './components/comic-details/comic-details.component';
-import { ComicLeftSidebarComponent } from './components/comic-left-sidebar/comic-left-sidebar.component';
+import { CharacterListComponent } from './components/character-list/character-list.component';
+import { CharacterDetailsComponent } from './components/character-details/character-details.component';
+import { CharacterLeftSidebarComponent } from './components/character-left-sidebar/character-left-sidebar.component';
 import { CommonModule } from '@angular/common';
-import { ComicRoutingModule } from './comic-routing.module';
+import { CharacterRoutingModule } from './character-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -19,21 +19,21 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { from } from 'rxjs';
 
 import { SearchCharacterComponent } from './components/widgets/search-character/search-character.component';
-import { ComicZoomComponent } from './components/comic-details/comic-zoom/comic-zoom.component';
+import { CharacterZoomComponent } from './components/character-details/character-zoom/character-zoom.component';
 
 
 @NgModule({
   declarations: [
-    ComicListComponent,
-    ComicDetailsComponent,
-    ComicLeftSidebarComponent,
+    CharacterListComponent,
+    CharacterDetailsComponent,
+    CharacterLeftSidebarComponent,
 
     SearchCharacterComponent,
-    ComicZoomComponent
+    CharacterZoomComponent
   ],
   imports: [
     CommonModule,
-    ComicRoutingModule,
+    CharacterRoutingModule,
     SharedModule,
     SwiperModule,
     FormsModule,
@@ -47,15 +47,15 @@ import { ComicZoomComponent } from './components/comic-details/comic-zoom/comic-
 
   ],
   exports: [
-    ComicZoomComponent,
+    CharacterZoomComponent,
     MatAutocompleteModule,
     MatInputModule
 
   ],
 
   entryComponents:[
-    ComicZoomComponent
+    CharacterZoomComponent
   ],
 })
 
-export class ComicModule { }
+export class CharacterModule { }

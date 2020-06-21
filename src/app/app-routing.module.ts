@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import { MainComponent } from './modules/main/main.component';
-import { HomeComponent } from './modules/home/components/home/home.component';
 
 
 const appRoutes: Routes = [
@@ -21,6 +19,10 @@ const appRoutes: Routes = [
   {
     path: 'comic',
     loadChildren: () => import('./modules/comic/comic.module').then(m => m.ComicModule)
+  },
+  {
+    path: 'character',
+    loadChildren: () => import('./modules/character/character.module').then(m => m.CharacterModule)
   },
   {
     path: '**',

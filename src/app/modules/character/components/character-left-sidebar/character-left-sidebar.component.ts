@@ -1,24 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
-import { ComicService } from '../../services/comic.service';
+import { CharacterService } from '../../services/character.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product, ColorFilter } from 'src/app/modals/product.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable, Subject } from 'rxjs';
-import {
-  tap,
-  switchMap,
-  debounceTime,
-  distinctUntilChanged
-} from "rxjs/operators";
 
 
 @Component({
-  selector: 'app-comic-left-sidebar',
-  templateUrl: './comic-left-sidebar.component.html',
-  styleUrls: ['./comic-left-sidebar.component.sass']
+  selector: 'app-character-left-sidebar',
+  templateUrl: './character-left-sidebar.component.html',
+  styleUrls: ['./character-left-sidebar.component.sass']
 })
-export class ComicLeftSidebarComponent implements OnInit {
+export class CharacterLeftSidebarComponent implements OnInit {
   public sidenavOpen:boolean = true;
   public animation    :   any;   // Animation
   public sortByOrder  :   string = 'title';   // sorting
@@ -42,12 +36,12 @@ export class ComicLeftSidebarComponent implements OnInit {
   comics$: Observable<any>;
   loading: boolean = false;
 
-  constructor(private spinner: NgxSpinnerService, private comicService: ComicService, private productService: ProductService, private route: ActivatedRoute) {
+  constructor(private spinner: NgxSpinnerService, private characterService: CharacterService, private productService: ProductService, private route: ActivatedRoute) {
     this.spinner.show();
     this.route.params.subscribe(
       (params: Params) => {
 
-        this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+        this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
           this.allItems = comics.data.results;
           this.allItemsCount = comics.data.total;
           this.comics = comics.data.results.slice(0.8);
@@ -60,7 +54,7 @@ export class ComicLeftSidebarComponent implements OnInit {
   search(term: string) {
     this.spinner.show();
     this.Term = term;
-    this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+    this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
       this.allItems = null;
       this.allItems = comics.data.results;
       this.allItemsCount = comics.data.total;
@@ -140,7 +134,7 @@ export class ComicLeftSidebarComponent implements OnInit {
       if(val != 'low' && val != 'high'){
         this.spinner.show();
         this.page = 0;
-        this.comicService.getComics(this.page,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+        this.characterService.getComics(this.page,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
           this.allItems = null;
           this.allItems = comics.data.results;
           this.allItemsCount = comics.data.total;
@@ -181,7 +175,7 @@ public onPageChanged(event){
   if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
     this.sortByOrder = 'title';
   }
-  this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+  this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
     this.allItems = null;
     this.allItems = comics.data.results;
     this.allItemsCount = comics.data.total;
@@ -197,7 +191,7 @@ public getCharacters(characters){
   if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
     this.sortByOrder = 'title';
   }
-  this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+  this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
     this.allItems = null;
     this.allItems = comics.data.results;
     this.allItemsCount = comics.data.total;

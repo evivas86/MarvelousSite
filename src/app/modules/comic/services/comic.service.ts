@@ -2,13 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subscriber, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ComicInterface } from '../interface/comic.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment';
-import { catchError } from 'rxjs/operators';
-
-
-// Get product from Localstorage
-let products = JSON.parse(localStorage.getItem("compareItem")) || [];
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +19,7 @@ export class ComicService {
 
   public observer   :  Subscriber<{}>;
 
-  constructor(private httpClient: HttpClient, public snackBar: MatSnackBar) {
+  constructor(private httpClient: HttpClient) {
   }
 
   private comics(offset: number,sortByOrder: string,term: string, characters: string): Observable<ComicInterface> {
@@ -48,6 +42,18 @@ export class ComicService {
     return this.httpClient.get<ComicInterface>(this.api + 'comics/' + id + '?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
   }
 
+  private comicCharactersById(id: number): Observable<ComicInterface> {
+    return this.httpClient.get<ComicInterface>(this.api + 'comics/' + id + '/characters?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  }
+
+  private comicCreatorsById(id: number): Observable<ComicInterface> {
+    return this.httpClient.get<ComicInterface>(this.api + 'comics/' + id + '/creators?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  }
+
+  private comicSuggestions(Term: string): Observable<ComicInterface> {
+    return this.httpClient.get<ComicInterface>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&orderBy=title&limit=4&titleStartsWith=' + Term);
+  }
+
     // Get Comics
     public getComics(offset: number, sortByOrder: string, term: string, characters: string): Observable<ComicInterface> {
       return this.comics(offset,sortByOrder,term,characters);
@@ -58,6 +64,20 @@ export class ComicService {
       return this.comic(id);
     }
 
+    // Get Comics
+    public getComicCharactersById(id: number): Observable<ComicInterface> {
+      return this.comicCharactersById(id);
+    }
+
+    // Get Comics
+    public getComicCreatorsById(id: number): Observable<ComicInterface> {
+      return this.comicCreatorsById(id);
+    }
+
+    public getComicSuggestions(Term: string): Observable<ComicInterface> {
+      return this.comicSuggestions(Term);
+    }
+
 
     searchComic(term: string): Observable<any> {
       let url = this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&titleStartsWith=' + term;
@@ -65,15 +85,6 @@ export class ComicService {
         return of([]);
       }
       return this.httpClient.get<any>(url);
-    }
-
-    private handleError<T>(operation = 'operation', result?: T) {
-      return (error: any): Observable<T> => {
-        console.log(`failed: ${error.message}`);
-        return of(result as T);
-      };
-    }
-
-    
+    }    
 
 }

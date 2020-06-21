@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import {TooltipPosition} from '@angular/material/tooltip';
 
 @Component({
-  selector: 'app-comic-list',
-  templateUrl: './comic-list.component.html',
-  styleUrls: ['./comic-list.component.sass']
+  selector: 'app-character-list',
+  templateUrl: './character-list.component.html',
+  styleUrls: ['./character-list.component.sass']
 })
-export class ComicListComponent implements OnInit {
+export class CharacterListComponent implements OnInit {
 
  @Input() comic: any;
 

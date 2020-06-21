@@ -4,17 +4,17 @@ import { ProductService } from 'src/app/modules/shared/services/product.service'
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SwiperDirective, SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { ComicZoomComponent } from './comic-zoom/comic-zoom.component';
+import { CharacterZoomComponent } from './character-zoom/character-zoom.component';
 import { DOCUMENT } from '@angular/common';
-import { ComicService } from '../../services/comic.service';
+import { CharacterService } from '../../services/character.service';
 
 
 @Component({
-  selector: 'app-comic-details',
-  templateUrl: './comic-details.component.html',
-  styleUrls: ['./comic-details.component.sass']
+  selector: 'app-character-details',
+  templateUrl: './character-details.component.html',
+  styleUrls: ['./character-details.component.sass']
 })
-export class ComicDetailsComponent implements OnInit {
+export class CharacterDetailsComponent implements OnInit {
 
   public config: SwiperConfigInterface = {};
   @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
@@ -41,23 +41,23 @@ export class ComicDetailsComponent implements OnInit {
   index: number;
   bigProductImageIndex = 0;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private route: ActivatedRoute, public productsService: ProductService, public dialog: MatDialog, private router: Router, private comicService: ComicService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private route: ActivatedRoute, public productsService: ProductService, public dialog: MatDialog, private router: Router, private CharacterService: CharacterService) {
     this.route.params.subscribe(params => {
 
-      this.comicService.getComicById(+params['id']).subscribe(data => {
+      this.CharacterService.getComicById(+params['id']).subscribe(data => {
         this.comic = data.data.results[0];
         this.comic.description == null ? this.comic.description = 'No description Available' : this.comic.description;
         let titleSlice: string = this.comic.title.slice(0,7).toLowerCase();
-        this.comicService.getComicSuggestions(titleSlice.trim()).subscribe(data => {
+        this.CharacterService.getComicSuggestions(titleSlice.trim()).subscribe(data => {
           this.setSuggestedComics(data.data.results);
            });
 
          });
-      this.comicService.getComicCharactersById(+params['id']).subscribe(data => {
+      this.CharacterService.getComicCharactersById(+params['id']).subscribe(data => {
         this.characters = data.data.results;
 
          });
-      this.comicService.getComicCreatorsById(+params['id']).subscribe(data => {
+      this.CharacterService.getComicCreatorsById(+params['id']).subscribe(data => {
         this.creators = data.data.results;
 
          });
@@ -131,7 +131,7 @@ export class ComicDetailsComponent implements OnInit {
   }
 
   public openProductDialog(bigProductImageIndex) {
-    let dialogRef = this.dialog.open(ComicZoomComponent,
+    let dialogRef = this.dialog.open(CharacterZoomComponent,
       {
       data: {img: bigProductImageIndex},
 
