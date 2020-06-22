@@ -1,32 +1,24 @@
 <div class="product-item"  >
   <mat-card fxLayout="column">
-    <div class="product-img">
-        <a [routerLink]="[comic.id]">
-          <img [src]="getImg(comic.thumbnail.path,comic.thumbnail.extension)" alt="">
+    <div class="character-img">
+        <a [routerLink]="[character.id]">
+          <img [src]="getImg(character.thumbnail.path,character.thumbnail.extension)" alt="">
        </a>
     </div>
-    <a *ngIf="comic.description" class="comic-a" [routerLink]="[comic.id]">
-      <div class="comic-desc" fxLayoutAlign="center center">
-         <div class="desc">{{comic.description}}</div>
-      </div>
-    </a>
      <div class="product-info-wrapper">
         <span class="category"></span>
         <div class="title-wrap">
-           <h4>{{comic.title}}</h4>
+           <h4>{{character.name}}</h4>
         </div>
-        <br>
         <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
-         <span>Written by: {{ writer}}</span>
+         <span>Comics: {{character.comics.available}}</span>
         </div>
         <div class="cover-wrap" fxLayout="row" fxLayoutAlign="space-between center">
-         <span>Cover by: {{ cover }}</span>
+         <span>Series: {{character.series.available}}</span>
         </div>
-        <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
-         <p>Price: ${{comic.prices[0].price | number : '1.2-2'}}</p>
-        </div>
+        <br>
         <div class="btn-wrap" fxLayout="row" fxLayoutAlign="space-between center">
-            <a [routerLink]="[comic.id]" >DETAILS</a>
+            <a [routerLink]="[character.id]" >DETAILS</a>
         </div>
      </div>
   </mat-card>

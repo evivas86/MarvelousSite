@@ -12,6 +12,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule} from '@angular/material/button-toggle'
 
 // Import the library
 import { NgxImageZoomModule } from 'ngx-image-zoom';
@@ -43,6 +44,7 @@ import { CharacterZoomComponent } from './components/character-details/character
     MatAutocompleteModule,
     MatTooltipModule,
     MatInputModule,
+    MatButtonToggleModule,
     NgxImageZoomModule.forRoot() // <-- Add this line
 
   ],

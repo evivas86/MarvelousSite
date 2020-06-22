@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CharacterInterface } from '../interface/character.interface';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -14,67 +13,59 @@ export class CharacterService {
   public ts: string = environment.ts;
   public hash: string = environment.hash;
 
-  public currency : string = 'USD';
-  public catalogMode : boolean = false;
-
-  public observer   :  Subscriber<{}>;
-
   constructor(private httpClient: HttpClient) {
   }
 
-  private comics(offset: number,sortByOrder: string,term: string, characters: string): Observable<CharacterInterface> {
+  private characters(offset: number,sortByOrder: string,term: string): Observable<any> {
     let searchTerm = '';
     if(term == ''){
       searchTerm = '';
     }else{
-      searchTerm = '&titleStartsWith=' + term;
+      searchTerm = '&nameStartsWith=' + term;
     }
-    let searchCharacter = '';
-    if(characters == ''){
-      searchCharacter = '';
-    }else{
-      searchCharacter = '&sharedAppearances=' + characters;
+    if(sortByOrder == ''){
+      sortByOrder = 'name';
     }
-    return this.httpClient.get<CharacterInterface>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&offset=' + offset + '&orderBy=' + sortByOrder + searchTerm + searchCharacter);
+    return this.httpClient.get<any>(this.api + 'characters?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&offset=' + offset + '&orderBy=' + sortByOrder + searchTerm);
   }
 
-  private comic(id: number): Observable<CharacterInterface> {
-    return this.httpClient.get<CharacterInterface>(this.api + 'comics/' + id + '?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  private comic(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + 'comics/' + id + '?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
   }
 
-  private comicCharactersById(id: number): Observable<CharacterInterface> {
-    return this.httpClient.get<CharacterInterface>(this.api + 'comics/' + id + '/characters?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  private comicCharactersById(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + 'comics/' + id + '/characters?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
   }
 
-  private comicCreatorsById(id: number): Observable<CharacterInterface> {
-    return this.httpClient.get<CharacterInterface>(this.api + 'comics/' + id + '/creators?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  private comicCreatorsById(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + 'comics/' + id + '/creators?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
   }
 
-  private comicSuggestions(Term: string): Observable<CharacterInterface> {
-    return this.httpClient.get<CharacterInterface>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&orderBy=title&limit=4&titleStartsWith=' + Term);
+  private comicSuggestions(Term: string): Observable<any> {
+    return this.httpClient.get<any>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&orderBy=title&limit=4&titleStartsWith=' + Term);
   }
 
     // Get Comics
-    public getComics(offset: number, sortByOrder: string, term: string, characters: string): Observable<CharacterInterface> {
-      return this.comics(offset,sortByOrder,term,characters);
+    public getCharacters(offset: number, sortByOrder: string, term: string): Observable<any> {
+      return this.characters(offset,sortByOrder,term);
     }
 
     // Get Comics
-    public getComicById(id: number): Observable<CharacterInterface> {
+    public getComicById(id: number): Observable<any> {
       return this.comic(id);
     }
 
     // Get Comics
-    public getComicCharactersById(id: number): Observable<CharacterInterface> {
+    public getComicCharactersById(id: number): Observable<any> {
       return this.comicCharactersById(id);
     }
 
     // Get Comics
-    public getComicCreatorsById(id: number): Observable<CharacterInterface> {
+    public getComicCreatorsById(id: number): Observable<any> {
       return this.comicCreatorsById(id);
     }
 
-    public getComicSuggestions(Term: string): Observable<CharacterInterface> {
+    public getComicSuggestions(Term: string): Observable<any> {
       return this.comicSuggestions(Term);
     }
 

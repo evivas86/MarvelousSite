@@ -802,6 +802,18 @@ width: 100% !important;
               margin-right: auto;
             }
         }
+        .character-img {
+          //background: $white;
+          min-height: 190px;
+            img {
+              max-width: 180px;
+              margin-bottom: 12px;
+              margin-top: 12px;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+            }
+        }
         .comic-a{
           position: absolute;
           width: 100%;
@@ -1471,6 +1483,18 @@ width: 100% !important;
                 img {
                   max-width: 180px;
                   margin-bottom: 12px;
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                }
+            }
+            .character-img {
+              //background: $white;
+              min-height: 190px;
+                img {
+                  max-width: 180px;
+                  margin-bottom: 12px;
+                  margin-top: 12px;
                   display: block;
                   margin-left: auto;
                   margin-right: auto;

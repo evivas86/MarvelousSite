@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { CharacterService } from '../../services/character.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product, ColorFilter } from 'src/app/modals/product.model';
@@ -15,7 +14,7 @@ import { Observable, Subject } from 'rxjs';
 export class CharacterLeftSidebarComponent implements OnInit {
   public sidenavOpen:boolean = true;
   public animation    :   any;   // Animation
-  public sortByOrder  :   string = 'title';   // sorting
+  public sortByOrder  :   string = 'name';   // sorting
   public page:any;
   public tagsFilters  :   any[] = [];
   public viewType: string = 'grid';
@@ -25,7 +24,7 @@ export class CharacterLeftSidebarComponent implements OnInit {
   public items        :   Product[] = [];
   public allItems: any;
   public allItemsCount: any;
-  public comics: any[] = [];
+  public characters: any[] = [];
   public tags         :   any[] = [];
   public colors       :   any[] = [];
   public offset       :   number = 0;
@@ -36,15 +35,16 @@ export class CharacterLeftSidebarComponent implements OnInit {
   comics$: Observable<any>;
   loading: boolean = false;
 
-  constructor(private spinner: NgxSpinnerService, private characterService: CharacterService, private productService: ProductService, private route: ActivatedRoute) {
+  constructor(private spinner: NgxSpinnerService, private characterService: CharacterService, private route: ActivatedRoute) {
     this.spinner.show();
     this.route.params.subscribe(
       (params: Params) => {
 
-        this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
-          this.allItems = comics.data.results;
-          this.allItemsCount = comics.data.total;
-          this.comics = comics.data.results.slice(0.8);
+        this.characterService.getCharacters(this.offset,this.sortByOrder,this.Term).subscribe(characters => {
+          console.log(characters);
+          this.allItems = characters.data.results;
+          this.allItemsCount = characters.data.total;
+          this.characters = characters.data.results.slice(0.8);
           this.spinner.hide();
            });
       }
@@ -54,11 +54,11 @@ export class CharacterLeftSidebarComponent implements OnInit {
   search(term: string) {
     this.spinner.show();
     this.Term = term;
-    this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+    this.characterService.getCharacters(this.offset,this.sortByOrder,this.Term).subscribe(characters => {
       this.allItems = null;
-      this.allItems = comics.data.results;
-      this.allItemsCount = comics.data.total;
-      this.comics = comics.data.results.slice(0.8);
+      this.allItems = characters.data.results;
+      this.allItemsCount = characters.data.total;
+      this.characters = characters.data.results.slice(0.8);
       this.spinner.hide();
        });
   }
@@ -134,10 +134,10 @@ export class CharacterLeftSidebarComponent implements OnInit {
       if(val != 'low' && val != 'high'){
         this.spinner.show();
         this.page = 0;
-        this.characterService.getComics(this.page,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+        this.characterService.getCharacters(this.page,this.sortByOrder,this.Term).subscribe(characters => {
           this.allItems = null;
-          this.allItems = comics.data.results;
-          this.allItemsCount = comics.data.total;
+          this.allItems = characters.data.results;
+          this.allItemsCount = characters.data.total;
           this.spinner.hide();
          });
       }
@@ -172,29 +172,22 @@ public onPageChanged(event){
   this.spinner.show();
   this.page = event;
   this.offset = ( this.page * 20 ) - 20;
-  if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
-    this.sortByOrder = 'title';
-  }
-  this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+  this.characterService.getCharacters(this.offset,this.sortByOrder,this.Term).subscribe(characters => {
     this.allItems = null;
-    this.allItems = comics.data.results;
-    this.allItemsCount = comics.data.total;
+    this.allItems = characters.data.results;
+    this.allItemsCount = characters.data.total;
     this.spinner.hide();
      });
   window.scrollTo(0,0);
 }
 
-public getCharacters(characters){
-  console.log(characters);
-  this.Characters = characters;
+public getCharactersByLetter(letter){
+  this.Term = letter;
   this.spinner.show();
-  if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
-    this.sortByOrder = 'title';
-  }
-  this.characterService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+  this.characterService.getCharacters(this.offset,this.sortByOrder,this.Term).subscribe(characters => {
     this.allItems = null;
-    this.allItems = comics.data.results;
-    this.allItemsCount = comics.data.total;
+    this.allItems = characters.data.results;
+    this.allItemsCount = characters.data.total;
     this.spinner.hide();
      });
 }

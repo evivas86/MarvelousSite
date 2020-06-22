@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, switchMap, map, filter } from 'rxjs/operators';
-import { SearchCharacterService } from '../../../services/search-character.service';
 
 @Component({
   selector: 'app-search-character',
@@ -14,56 +12,32 @@ export class SearchCharacterComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<any>;
   characters: any[] = [];
+  letters: any = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+  selectedLetter: string = '';
 
   @Output()
-  charactersForSearch = new EventEmitter<any>();
+  letterForSearch = new EventEmitter<any>();
 
-  constructor(private searchCharacter: SearchCharacterService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        switchMap(value => this._filter(value))
-      );
   }
 
-  private _filter(value: string) {
-    const filterValue = value.toLowerCase();
-    return this.searchCharacter.getData(value).pipe(
-      filter(data => !!data),
-      map((data) => {
-        let results = data['data']['results'];
-        return results.filter(option => option.name.toLowerCase().includes(value))
-      })
-    )
-  }
-
-  addCharacter(id,name) {
-
-    var character = {
-      id: id,
-      name: name
+  processCharacters(letter) {
+    if(this.selectedLetter != letter){
+      this.selectedLetter = letter;
+    }else{
+      this.selectedLetter = '';
     }
-    this.characters.push(character);
-    this.processCharacters(this.characters);
+    this.letterForSearch.emit(this.selectedLetter);
   }
 
-  deleteCharacter(i) {
-    this.characters.splice(i, 1);
-    this.processCharacters(this.characters);
-  }
-
-  processCharacters(characters) {
-    let s = '';
-    for (let i = 0; i < characters.length; i++) {
-      if(i == 0){
-        s = s + characters[i].id;
-      }else{
-        s = s + ',' + characters[i].id;
-      }
+  setColor(letter){
+    if(this.selectedLetter == letter){
+      return 'accent';
+    }else{
+      return 'grey';
     }
-    this.charactersForSearch.emit(s);
   }
 
 }
