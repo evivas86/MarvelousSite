@@ -19,5 +19,10 @@ export class SearchCharacterService {
       if(name.length < 1){ name = 'a' }
       return this.httpClient.get(this.api + 'characters?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&nameStartsWith=' + name)
     }
+    public getDataID(id: string) {
+      if(id.length > 0){
+        return this.httpClient.get(this.api + 'characters/'+ id +'?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash)
+      }
+    }
 
 }

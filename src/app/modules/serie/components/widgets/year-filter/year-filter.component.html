@@ -1,0 +1,9 @@
+<div class="category-contant">
+  <div>
+    <jp-multi-datepicker mode="YEAR" label="Start year" [max]="2020" [(ngModel)]="startYear" (dateChange)="setStartYear($event)"></jp-multi-datepicker>
+  </div
+  ><div>
+    <jp-multi-datepicker mode="YEAR" label="End year" [max]="2020" [(ngModel)]="endYear" (dateChange)="setEndYear($event)"></jp-multi-datepicker>
+  </div>
+  <div><button mat-raised-button color='accent' (click)='sendEmitter()'> Set Filter</button></div>
+</div>

@@ -1,18 +1,48 @@
 <div class="left-sidebar-wrapper">
-  <div fxLayoutAlign="center"><h2>Comics</h2></div>
+  <div fxLayoutAlign="center"><h2>Series</h2></div>
 <div class="container">
   <div class="sidebar-wrapper" fxLayout='row' fxLayout.lt-md="column" >
       <div fxFlex="25" fxFlex.lt-sm="100" class="filter-sidenav" perfectScrollbar>
           <div class="toggles-wrapper" fxLayout="column" fxLayout.lt-md="column">
               <div class="toggles" fxFlex.lt-md="100">
                   <mat-accordion>
+                      <mat-expansion-panel [expanded]="cID">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span>Search Series by Character Appearances</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    <app-character-filter [character]="Characters" (charactersForSearch)="getCharacters($event)"></app-character-filter>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  <mat-accordion>
                       <mat-expansion-panel expanded>
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                              <span>Search Comic by Character Appearances</span>
+                              <span>Filter Series by Type</span>
                           </mat-panel-title>
                         </mat-expansion-panel-header>
-                    <app-search-character [character]="Characters" (charactersForSearch)="getCharacters($event)"></app-search-character>
+                    <app-type-filter (typeForSearch)="getType($event)"></app-type-filter>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                      <mat-expansion-panel expanded>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span>Filter Series by Rating</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    <app-rating-filter (ratingForSearch)="getRating($event)"></app-rating-filter>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                      <mat-expansion-panel expanded>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span>Filter Series by Year</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    <app-year-filter (yearForSearch)="getYears($event)"></app-year-filter>
                       </mat-expansion-panel>
                     </mat-accordion>
               </div>
@@ -28,15 +58,13 @@
                     <mat-select>
                       <mat-option (click)="onChangeSorting('title')" value="title">Alphabetically, A-Z</mat-option>
                       <mat-option (click)="onChangeSorting('-title')" value="-title">Alphabetically, Z-A</mat-option>
-                      <mat-option (click)="onChangeSorting('low')" value="low">Price, low to high</mat-option>
-                      <mat-option (click)="onChangeSorting('high')" value="high">Price, high to low</mat-option>
                     </mat-select>
                   </mat-form-field>
 
                 </div>
                 <div>
                   <mat-form-field appearance="legacy">
-                    <input matInput placeholder="Search by Comic Name" (keyup)="search($event.target.value)">
+                    <input matInput placeholder="Search by Serie's Name" (keyup)="search($event.target.value)">
                   </mat-form-field>
                 </div>
                 <div>
@@ -52,7 +80,7 @@
                     </button>
                 </div>
               </div>
-              <div *ngIf="comics.length > 0" fxLayout="row wrap ">
+              <div *ngIf="series.length > 0" fxLayout="row wrap ">
                 <div fxFlex="100">
                     <mat-card class="p-0 text-center no-shadow">
                         <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
@@ -61,14 +89,14 @@
             </div>
               <div fxLayout="row wrap" class="products-wrapper">
                   <div *ngIf="allItemsCount < 1">Search has no results</div>
-                  <div *ngFor="let comic of allItems | orderBy:sortByOrder | paginate: { itemsPerPage: 20, currentPage: page, totalItems: allItemsCount  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+                  <div *ngFor="let serie of allItems | orderBy:sortByOrder | paginate: { itemsPerPage: 20, currentPage: page, totalItems: allItemsCount  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
                      <div class="product-box">
-                        <app-comic-list [comic]="comic"></app-comic-list>
+                        <app-serie-list [serie]="serie"></app-serie-list>
                      </div>
                   </div>
               </div>
 
-              <div *ngIf="comics.length > 0" fxLayout="row wrap ">
+              <div *ngIf="series.length > 0" fxLayout="row wrap ">
                   <div fxFlex="100">
                       <mat-card class="p-0 text-center no-shadow">
                           <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>

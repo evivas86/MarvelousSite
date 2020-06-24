@@ -1,0 +1,16 @@
+<div class="category-contant">
+
+  <mat-form-field>
+    <mat-label>Rating</mat-label>
+    <mat-select value="not rated">
+      <mat-option (click)="onChangeRating('not rated')" value="not rated" selected>NOT RATED</mat-option>
+      <mat-option (click)="onChangeRating('t')" value="t">T</mat-option>
+      <mat-option (click)="onChangeRating('t+')" value="t+">T+</mat-option>
+      <mat-option (click)="onChangeRating('psr')" value="psr">MARVEL PSR</mat-option>
+      <mat-option (click)="onChangeRating('a')" value="a">A</mat-option>
+      <mat-option (click)="onChangeRating('explicit content')" value="explicit content">EXPLICIT CONTENT</mat-option>
+      <mat-option (click)="onChangeRating('all ages')" value="all ages">ALL AGES</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>

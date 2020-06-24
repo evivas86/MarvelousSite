@@ -22,9 +22,9 @@ export class CharacterDetailsComponent implements OnInit {
   @ViewChild(SwiperDirective, { static: true }) directiveRef: SwiperDirective;
 
   public product: Product;
-  public comic: any;
-  public characters: any;
-  public creators: any;
+  public character: any;
+  public comics: any[] = [];
+  public series: any[] = [];
   public products: Product[] = [];
   public images: Product;
   public image: any;
@@ -44,22 +44,18 @@ export class CharacterDetailsComponent implements OnInit {
   constructor(@Inject(DOCUMENT) private document: Document, private route: ActivatedRoute, public productsService: ProductService, public dialog: MatDialog, private router: Router, private CharacterService: CharacterService) {
     this.route.params.subscribe(params => {
 
-      this.CharacterService.getComicById(+params['id']).subscribe(data => {
-        this.comic = data.data.results[0];
-        this.comic.description == null ? this.comic.description = 'No description Available' : this.comic.description;
-        let titleSlice: string = this.comic.title.slice(0,7).toLowerCase();
-        this.CharacterService.getComicSuggestions(titleSlice.trim()).subscribe(data => {
-          this.setSuggestedComics(data.data.results);
-           });
+      this.CharacterService.getCharacterById(+params['id']).subscribe(data => {
+        this.character = data.data.results[0];
+        this.character.description == null || this.character.description == '' ? this.character.description = 'No description Available' : this.character.description;
 
          });
-      this.CharacterService.getComicCharactersById(+params['id']).subscribe(data => {
-        this.characters = data.data.results;
 
+      this.CharacterService.getCharacterComicsById(+params['id']).subscribe(data => {
+        this.setComics(data.data.results);
          });
-      this.CharacterService.getComicCreatorsById(+params['id']).subscribe(data => {
-        this.creators = data.data.results;
-
+      this.CharacterService.getCharacterSeriesById(+params['id']).subscribe(data => {
+        console.log(data.data.results);
+        this.series = data.data.results;
          });
 
       this.productsService.getProduct(1).subscribe(product => {
@@ -145,44 +141,54 @@ export class CharacterDetailsComponent implements OnInit {
     return path +'.'+ extension;
   }
 
-  public getRole(fullname: string) {
+
+  public searchMoreComics(id: number) {
+    this.router.navigate(['/comic'],{queryParams:{cID:id}});
+  }
+
+  public searchMoreSeries(id: number) {
+    this.router.navigate(['/serie'],{queryParams:{cID:id}});
+  }
+
+
+  /*public getRole(fullname: string) {
     let comicCreators = this.comic.creators.items;
     for (let index = 0; index < comicCreators.length; index++) {
       if(comicCreators[index].name == fullname){
         return comicCreators[index].role;
       }      
     }
-  }
+  }*/
 
-  public setSuggestedComics(suggestedComics){
-    for (let i = 0; i < suggestedComics.length; i++) {
+  public setComics(Comics){
+    for (let i = 0; i < Comics.length; i++) {
       this.w_flag = 0;
       this.c_flag = 0;
-      if(suggestedComics[i].creators.available > 0){
+      if(Comics[i].creators.available > 0){
 
-        for (let x = 0; x < suggestedComics[i].creators.items.length; x++) {
+        for (let x = 0; x < Comics[i].creators.items.length; x++) {
 
-          if(suggestedComics[i].creators.items[x].role == 'writer' && this.w_flag == 0){
-            suggestedComics[i].creators.writer = suggestedComics[i].creators.items[x].name;
+          if(Comics[i].creators.items[x].role == 'writer' && this.w_flag == 0){
+            Comics[i].creators.writer = Comics[i].creators.items[x].name;
             this.w_flag = 1;
-          }else if(suggestedComics[i].creators.items[x].role == 'penciller (cover)' && this.c_flag == 0){
-            suggestedComics[i].creators.cover = suggestedComics[i].creators.items[x].name;
+          }else if(Comics[i].creators.items[x].role == 'penciller (cover)' && this.c_flag == 0){
+            Comics[i].creators.cover = Comics[i].creators.items[x].name;
             this.c_flag = 1;
           }
 
-          if(this.w_flag == 0){suggestedComics[i].creators.writer = 'Not Available';}
-          if(this.c_flag == 0){suggestedComics[i].creators.cover = 'Not Available';}
+          if(this.w_flag == 0){Comics[i].creators.writer = 'Not Available';}
+          if(this.c_flag == 0){Comics[i].creators.cover = 'Not Available';}
           
         }
 
       }else{
 
-        suggestedComics[i].creators.writer = 'Not Available';
-         suggestedComics[i].creators.cover = 'Not Available';
+        Comics[i].creators.writer = 'Not Available';
+        Comics[i].creators.cover = 'Not Available';
 
       }
       
-      this.suggestedComics = suggestedComics.filter(item => item.id != this.comic.id);
+      this.comics = Comics;
     }
   }
 

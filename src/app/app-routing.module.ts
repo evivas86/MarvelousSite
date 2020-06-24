@@ -25,6 +25,10 @@ const appRoutes: Routes = [
     loadChildren: () => import('./modules/character/character.module').then(m => m.CharacterModule)
   },
   {
+    path: 'serie',
+    loadChildren: () => import('./modules/serie/serie.module').then(m => m.SerieModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

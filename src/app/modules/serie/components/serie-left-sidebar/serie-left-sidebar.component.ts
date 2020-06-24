@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
-import { ComicService } from '../../services/comic.service';
+import { SerieService } from '../../services/serie.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product, ColorFilter } from 'src/app/modals/product.model';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -8,11 +8,11 @@ import { Observable, Subject } from 'rxjs';
 
 
 @Component({
-  selector: 'app-comic-left-sidebar',
-  templateUrl: './comic-left-sidebar.component.html',
-  styleUrls: ['./comic-left-sidebar.component.sass']
+  selector: 'app-serie-left-sidebar',
+  templateUrl: './serie-left-sidebar.component.html',
+  styleUrls: ['./serie-left-sidebar.component.sass']
 })
-export class ComicLeftSidebarComponent implements OnInit {
+export class SerieLeftSidebarComponent implements OnInit {
   public sidenavOpen:boolean = true;
   public animation    :   any;   // Animation
   public sortByOrder  :   string = 'title';   // sorting
@@ -25,19 +25,20 @@ export class ComicLeftSidebarComponent implements OnInit {
   public items        :   Product[] = [];
   public allItems: any[] = [];
   public allItemsCount: number = 0;
-  public comics: any[] = [];
+  public series: any[] = [];
   public tags         :   any[] = [];
   public colors       :   any[] = [];
   public offset       :   number = 0;
   public Term       :   string = '';
   public Characters       :   string = '';
+  public Type       :   string = '';
   public cID: string;
 
   searchTerms = new Subject<string>();
   comics$: Observable<any>;
   loading: boolean = false;
 
-  constructor(private spinner: NgxSpinnerService, private comicService: ComicService, private productService: ProductService, private route: ActivatedRoute) {
+  constructor(private spinner: NgxSpinnerService, private serieService: SerieService, private productService: ProductService, private route: ActivatedRoute) {
     this.spinner.show();
     this.route.params.subscribe(
       (params: Params) => {
@@ -45,10 +46,10 @@ export class ComicLeftSidebarComponent implements OnInit {
         if(this.cID){
           this.Characters = this.cID;
         }
-        this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
-          this.allItems = comics.data.results;
-          this.allItemsCount = comics.data.total;
-          this.comics = comics.data.results.slice(0.8);
+        this.serieService.getSeries(this.offset,this.sortByOrder,this.Term,this.Characters,this.Type).subscribe(series => {
+          this.allItems = series.data.results;
+          this.allItemsCount = series.data.total;
+          this.series = series.data.results;
           this.spinner.hide();
            });
       }
@@ -58,11 +59,11 @@ export class ComicLeftSidebarComponent implements OnInit {
   search(term: string) {
     this.spinner.show();
     this.Term = term;
-    this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+    this.serieService.getSeries(this.offset,this.sortByOrder,this.Term,this.Characters,this.Type).subscribe(series => {
       this.allItems = null;
-      this.allItems = comics.data.results;
-      this.allItemsCount = comics.data.total;
-      this.comics = comics.data.results.slice(0.8);
+      this.allItems = series.data.results;
+      this.allItemsCount = series.data.total;
+      this.series = series.data.results.slice(0.8);
       this.spinner.hide();
        });
   }
@@ -138,10 +139,10 @@ export class ComicLeftSidebarComponent implements OnInit {
       if(val != 'low' && val != 'high'){
         this.spinner.show();
         this.page = 0;
-        this.comicService.getComics(this.page,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+        this.serieService.getSeries(this.page,this.sortByOrder,this.Term,this.Characters,this.Type).subscribe(series => {
           this.allItems = null;
-          this.allItems = comics.data.results;
-          this.allItemsCount = comics.data.total;
+          this.allItems = series.data.results;
+          this.allItemsCount = series.data.total;
           this.spinner.hide();
          });
       }
@@ -179,28 +180,56 @@ public onPageChanged(event){
   if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
     this.sortByOrder = 'title';
   }
-  this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+  this.serieService.getSeries(this.offset,this.sortByOrder,this.Term,this.Characters,this.Type).subscribe(series => {
     this.allItems = null;
-    this.allItems = comics.data.results;
-    this.allItemsCount = comics.data.total;
+    this.allItems = series.data.results;
+    this.allItemsCount = series.data.total;
     this.spinner.hide();
      });
   window.scrollTo(0,0);
 }
 
 public getCharacters(characters){
-  console.log(characters);
   this.Characters = characters;
   this.spinner.show();
   if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
     this.sortByOrder = 'title';
   }
-  this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters).subscribe(comics => {
+  this.serieService.getSeries(this.offset,this.sortByOrder,this.Term,this.Characters,this.Type).subscribe(series => {
     this.allItems = null;
-    this.allItems = comics.data.results;
-    this.allItemsCount = comics.data.total;
+    this.allItems = series.data.results;
+    this.allItemsCount = series.data.total;
     this.spinner.hide();
      });
+}
+public getYears(years){
+
+  let filterSeries = this.series.filter(option => option.startYear >= years[0]);
+  this.allItems = filterSeries.filter(option => option.startYear <= years[1]);
+  
+}
+public getRating(rating){
+
+  if(rating == 'not rated'){ rating = ''; }
+
+  this.allItems = this.series.filter(option => option.rating.toLowerCase().includes(rating));
+
+}
+
+public getType(type){
+
+  if(type == 'no type'){ type = '';}
+  this.Type = type;
+
+  this.spinner.show();
+
+  this.serieService.getSeries(this.offset,this.sortByOrder,this.Term,this.Characters,this.Type).subscribe(series => {
+    this.allItems = null;
+    this.allItems = series.data.results;
+    this.allItemsCount = series.data.total;
+    this.spinner.hide();
+     });
+
 }
 
 }

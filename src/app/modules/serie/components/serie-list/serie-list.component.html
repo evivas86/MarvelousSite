@@ -1,0 +1,57 @@
+<div class="product-item"  >
+  <mat-card fxLayout="column">
+    <div class="character-img">
+        <a>
+          <img [src]="getImg(serie.thumbnail.path,serie.thumbnail.extension)" alt="">
+       </a>
+    </div>
+    <a class="comic-a">
+      <div class="comic-desc" fxLayoutAlign="center center">
+         <div class="desc">{{serie.description == '' || serie.description == null ? 'No description Available' : serie.description}}</div>
+      </div>
+    </a>
+     <div class="product-info-wrapper">
+        <span class="category"></span>
+        <div class="title-wrap">
+           <h4>{{serie.title}}</h4>
+        </div>
+        <br>
+        <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Written by: {{ serie.creators.writer }}</span>
+        </div>
+        <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Start Year: {{ serie.startYear }}</span>
+        </div>
+        <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>End Year: {{ serie.endYear }}</span>
+        </div>
+        <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Type: {{ serie.type }}</span>
+        </div>
+        <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Rating: {{ serie.rating }}</span>
+        </div>
+        <!--<div class="cover-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Cover by: {{ cover }}</span>
+        </div>
+        <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <p>Price: ${{comic.prices[0].price | number : '1.2-2'}}</p>
+        </div>-->
+     </div>
+  </mat-card>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

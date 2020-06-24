@@ -1,0 +1,13 @@
+<div class="category-contant">
+
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <mat-select value="no type">
+      <mat-option (click)="onChangeType('no type')" value="no type" selected>NO TYPE</mat-option>
+      <mat-option (click)="onChangeType('collection')" value="collection">COLLECTION</mat-option>
+      <mat-option (click)="onChangeType('one shot')" value="one shot">ONE SHOT</mat-option>
+      <mat-option (click)="onChangeType('limited')" value="limited">LIMITED</mat-option>
+      <mat-option (click)="onChangeType('ongoing')" value="ongoing">ONGOING</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

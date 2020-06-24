@@ -11,7 +11,7 @@
                        <button mat-icon-button  fxHide="false" fxHide.gt-md>
                           <mat-icon>fullscreen</mat-icon>
                        </button>
-                       <img [src]="getImg(comic.images[0].path,comic.images[0].extension)"/>
+                       <img [src]="getImg(character.thumbnail.path,character.thumbnail.extension)"/>
                     </div>
                     <a (click)="openProductDialog(fullImgPath)"><mat-icon>zoom_in</mat-icon></a>
                  </mat-card>
@@ -20,9 +20,8 @@
 
                   <div class="product-right">
                      <div class="product-details">
-                        <h2>{{comic.title}}</h2>
-                        <h3 class="price">{{comic.prices[0].price | currency:productsService?.currency:'symbol'}}</h3>
-                        <p class="text-muted description">{{comic.description}}</p>
+                        <h2>{{character.name}}</h2>
+                        <p class="text-muted description">{{character.description}}</p>
                      </div>
                      <div class="py-1 mt-15 mb-15">
                      </div>
@@ -36,33 +35,42 @@
           <div class="review-wrapper" fxFlex="100"  fxFlex.md="75">
 
                <mat-tab-group [@.disabled]="true" [selectedIndex]="0">
-               <mat-tab label="Characters">
+               <mat-tab label="Comics">
                   <div fxLayout="row wrap" class="products-wrapper">
-                  <div *ngIf="characters.length == 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                  <div *ngIf="comics.length == 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
                      <div class="product-box">
                         <div class="product-item" >
                            <mat-card fxLayout="column">
                               <div class="product-info-wrapper">
                                  <div class="title-wrap" fxLayoutAlign="center">
-                                    <h4>No Character(s) Available</h4>
+                                    <h4>No Comics(s) Available</h4>
                                  </div>
                               </div>
                            </mat-card>
                          </div>
                      </div>
                   </div>
-                  <div *ngFor="let character of characters" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                  <div *ngFor="let comic of comics" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
                      <div class="product-box">
                         <div class="product-item" >
-                           <a routerLink="/character/{{character.id}}">
+                           <a routerLink="/comic/{{comic.id}}">
                            <mat-card fxLayout="column">
                              <div class="product-img">
-                                   <img [src]="getImg(character.thumbnail.path,character.thumbnail.extension)" alt="">
+                                   <img [src]="getImg(comic.images[0].path,comic.images[0].extension)" alt="">
                              </div>
                               <div class="product-info-wrapper">
                                  <div class="title-wrap" fxLayoutAlign="center">
-                                    <h4>{{character.name}}</h4>
+                                    <h4>{{comic.title}}</h4>
                                  </div>
+                                 <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <span>Written by: {{ comic.creators.writer }}</span>
+                                   </div>
+                                   <div class="cover-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <span>Cover by: {{ comic.creators.cover }}</span>
+                                   </div>
+                                   <div class="price-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <p>Price: ${{comic.prices[0].price | number : '1.2-2'}}</p>
+                                   </div>
                               </div>
                            </mat-card>
                            </a>
@@ -70,37 +78,47 @@
                      </div>
                   </div>
                   </div>
+                  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col"><button mat-raised-button color='accent' (click)='searchMoreComics(character.id)'> More Comics from this Character</button></div>
                </mat-tab>
-               <mat-tab label="Creators">
+               <mat-tab label="Series">
                   <div fxLayout="row wrap" class="products-wrapper">
-                     <div *ngIf="creators.length == 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                     <div *ngIf="series.length == 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
                         <div class="product-box">
                            <div class="product-item" >
                               <mat-card fxLayout="column">
                                  <div class="product-info-wrapper">
                                     <div class="title-wrap" fxLayoutAlign="center">
-                                       <h4>No Creator(s) Available</h4>
+                                       <h4>No Serie(s) Available</h4>
                                     </div>
                                  </div>
                               </mat-card>
                             </div>
                         </div>
                      </div>
-                     <div *ngFor="let creator of creators" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                     <div *ngFor="let serie of series" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
                         <div class="product-box">
                            <div class="product-item" >
-                              <a routerLink="/creator/{{creator.id}}">
+                              <a routerLink="/series/{{serie.id}}">
                               <mat-card fxLayout="column">
                                 <div class="product-img">
-                                      <img [src]="getImg(creator.thumbnail.path,creator.thumbnail.extension)" alt="">
+                                      <img [src]="getImg(serie.thumbnail.path,serie.thumbnail.extension)" alt="">
                                 </div>
                                  <div class="product-info-wrapper">
                                     <div class="title-wrap" fxLayoutAlign="center">
-                                       <h4>{{creator.fullName}}</h4>
+                                       <h4>{{serie.title}}</h4>
                                     </div>
-                                    <div class="written-wrap" fxLayoutAlign="center">
-                                     <span>{{ getRole(creator.fullName) }}</span>
-                                    </div>
+                                    <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Start Year: {{ serie.startYear }}</span>
+                                      </div>
+                                      <div class="cover-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>End Year: {{ serie.endYear }}</span>
+                                      </div>
+                                      <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Type: {{ serie.type == '' ? 'Not Available': serie.type }}</span>
+                                      </div>
+                                      <div class="cover-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Rating: {{ serie.rating == '' ? 'Not Available': serie.rating }}</span>
+                                      </div>
                                  </div>
                               </mat-card>
                               </a>
@@ -108,12 +126,13 @@
                         </div>
                      </div>
                      </div>
+                     <div *ngIf="series.length > 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col"><button mat-raised-button color='accent' (click)='searchMoreSeries(character.id)'> More Series from this Character</button></div>
                </mat-tab>
                </mat-tab-group>
                <br><br>
                <h4>Suggested Comics</h4>
                <div fxLayout="row wrap" class="products-wrapper">
-                  <div *ngFor="let suggested of suggestedComics" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                  <!--<div *ngFor="let suggested of suggestedComics" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
                      <div class="product-box">
                         <div class="product-item" >
                            <a routerLink="/comic/{{suggested.id}}">
@@ -139,7 +158,7 @@
                            </a>
                          </div>
                      </div>
-                  </div>
+                  </div>-->
                   </div>
 
          </div>

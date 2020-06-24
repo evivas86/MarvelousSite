@@ -183,6 +183,9 @@ background: #fff;
 .mat-mini-fab.mat-accent {
   background-color: $theme-main;
 }
+.mat-raised-button.mat-accent {
+  background-color: $theme-main;
+}
 a {
   text-decoration: none;
 }
@@ -4185,4 +4188,15 @@ button.swipe-arrow {
   background-image: none;
 }
 }
+}
+
+.mat-calendar-body-selected {
+  background-color: $theme-main !important;
+  color: #fff;
+}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: $theme-main !important;
+}
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $theme-main !important;
 }

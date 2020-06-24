@@ -2,14 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, switchMap, map, filter } from 'rxjs/operators';
-import { SearchCharacterService } from '../../../services/search-character.service';
+import { SerieService } from '../../../services/serie.service';
 
 @Component({
-  selector: 'app-search-character',
-  templateUrl: './search-character.component.html',
-  styleUrls: ['./search-character.component.sass']
+  selector: 'app-character-filter',
+  templateUrl: './character-filter.component.html',
+  styleUrls: ['./character-filter.component.sass']
 })
-export class SearchCharacterComponent implements OnInit {
+export class CharacterFilterComponent implements OnInit {
 
   @Input() character: any;
 
@@ -21,12 +21,12 @@ export class SearchCharacterComponent implements OnInit {
   @Output()
   charactersForSearch = new EventEmitter<any>();
 
-  constructor(private searchCharacter: SearchCharacterService) { }
+  constructor(private serieService: SerieService) { }
 
   ngOnInit() {
 
     if(this.character != ''){
-      this.searchCharacter.getDataID(this.character).subscribe((c: any)=>{
+      this.serieService.getDataID(this.character).subscribe((c: any)=>{
         this.addCharacter(c.data.results[0].id,c.data.results[0].name);
       })
     }
@@ -39,7 +39,7 @@ export class SearchCharacterComponent implements OnInit {
 
   private _filter(value: string) {
     const filterValue = value.toLowerCase();
-    return this.searchCharacter.getData(value).pipe(
+    return this.serieService.getData(value).pipe(
       filter(data => !!data),
       map((data) => {
         let results = data['data']['results'];
