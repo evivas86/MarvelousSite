@@ -59,6 +59,13 @@
                     </mat-card>
                 </div>
             </div>
+              <div *ngIf="creatorName" fxLayout="row wrap ">
+                <div fxFlex="100">
+                    <mat-card class="p-0 text-center no-shadow">
+                        Results are Filtered by Creator: {{creatorName}}
+                    </mat-card>
+                </div>
+            </div>
               <div fxLayout="row wrap" class="products-wrapper">
                   <div *ngIf="allItemsCount < 1">Search has no results</div>
                   <div *ngFor="let comic of allItems | orderBy:sortByOrder | paginate: { itemsPerPage: 20, currentPage: page, totalItems: allItemsCount  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">

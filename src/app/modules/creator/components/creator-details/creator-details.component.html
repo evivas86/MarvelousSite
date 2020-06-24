@@ -1,0 +1,154 @@
+<div class="container" id="mainDIV" >
+  <div class="main-details-wrap">
+
+
+    <div class="details-wrapper sec-padding" *ngIf="product" fxLayoutAlign="center">
+       <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="80">
+          <div fxLayout="row wrap" fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="100">
+              <div fxFlex="100" fxFlex.gt-md="50" fxFlex.md="45">
+                  <mat-card class="product-image">
+                    <div>
+                       <button mat-icon-button  fxHide="false" fxHide.gt-md>
+                          <mat-icon>fullscreen</mat-icon>
+                       </button>
+                       <img [src]="getImg(creator.thumbnail.path,creator.thumbnail.extension)"/>
+                    </div>
+                    <a (click)="openProductDialog(fullImgPath)"><mat-icon>zoom_in</mat-icon></a>
+                 </mat-card>
+               </div>
+               <div fxFlex="100" fxFlex.gt-md="50" fxFlex.md="55" ngClass.gt-sm="px-3 m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
+
+                  <div class="product-right">
+                     <div class="product-details">
+                        <h2>{{creator.fullName}}</h2>
+                        <p class="text-muted description" *ngIf="creator.firstName">First Name: {{creator.firstName}}</p>
+                        <p class="text-muted description" *ngIf="creator.middleName">Middle Name: {{creator.middleName}}</p>
+                        <p class="text-muted description" *ngIf="creator.lastName">Last Name: {{creator.lastName}}</p>
+                     </div>
+                     <div class="py-1 mt-15 mb-15">
+                     </div>
+                     <div class="quantity mb-15">
+                     </div>
+
+                  </div>
+               </div>
+          </div>
+
+          <div class="review-wrapper" fxFlex="100"  fxFlex.md="75">
+
+               <mat-tab-group [@.disabled]="true" [selectedIndex]="0">
+               <mat-tab label="Comics">
+                  <div fxLayout="row wrap" class="products-wrapper">
+                  <div *ngIf="comics.length == 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                     <div class="product-box">
+                        <div class="product-item" >
+                           <mat-card fxLayout="column">
+                              <div class="product-info-wrapper">
+                                 <div class="title-wrap" fxLayoutAlign="center">
+                                    <h4>No Comics(s) Available</h4>
+                                 </div>
+                              </div>
+                           </mat-card>
+                         </div>
+                     </div>
+                  </div>
+                  <div *ngFor="let comic of comics" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                     <div class="product-box">
+                        <div class="product-item" >
+                           <a routerLink="/comic/{{comic.id}}">
+                           <mat-card fxLayout="column">
+                             <div class="product-img">
+                                   <img [src]="getImg(comic.images[0].path,comic.images[0].extension)" alt="">
+                             </div>
+                              <div class="product-info-wrapper">
+                                 <div class="title-wrap" fxLayoutAlign="center">
+                                    <h4>{{comic.title}}</h4>
+                                 </div>
+                                 <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <span>Written by: {{ comic.creators.writer }}</span>
+                                   </div>
+                                   <div class="cover-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <span>Cover by: {{ comic.creators.cover }}</span>
+                                   </div>
+                                   <div class="price-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <p>Price: ${{comic.prices[0].price | number : '1.2-2'}}</p>
+                                   </div>
+                                   <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                    <span>Role: {{ comic.creators.role }}</span>
+                                   </div>
+                              </div>
+                           </mat-card>
+                           </a>
+                         </div>
+                     </div>
+                  </div>
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col"><button mat-raised-button color='accent' (click)='searchMoreComics(creator.id)'> More Comics from this Creator</button></div>
+               </mat-tab>
+               <mat-tab label="Series">
+                  <div fxLayout="row wrap" class="products-wrapper">
+                     <div *ngIf="series.length == 0" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                        <div class="product-box">
+                           <div class="product-item" >
+                              <mat-card fxLayout="column">
+                                 <div class="product-info-wrapper">
+                                    <div class="title-wrap" fxLayoutAlign="center">
+                                       <h4>No Serie(s) Available</h4>
+                                    </div>
+                                 </div>
+                              </mat-card>
+                            </div>
+                        </div>
+                     </div>
+                     <div *ngFor="let serie of series" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="col">
+                        <div class="product-box">
+                           <div class="product-item" >
+                              <a>
+                              <mat-card fxLayout="column">
+                                <div class="product-img">
+                                      <img [src]="getImg(serie.thumbnail.path,serie.thumbnail.extension)" alt="">
+                                </div>
+                                 <div class="product-info-wrapper">
+                                    <div class="title-wrap" fxLayoutAlign="center">
+                                       <h4>{{serie.title}}</h4>
+                                    </div>
+                                    <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Start Year: {{ serie.startYear }}</span>
+                                      </div>
+                                      <div class="cover-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>End Year: {{ serie.endYear }}</span>
+                                      </div>
+                                      <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Type: {{ serie.type == '' ? 'Not Available': serie.type }}</span>
+                                      </div>
+                                      <div class="cover-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Rating: {{ serie.rating == '' ? 'Not Available': serie.rating }}</span>
+                                      </div>
+                                      <div class="written-wrap" fxLayout="row" fxLayoutAlign="center">
+                                       <span>Role: {{ serie.creators.role }}</span>
+                                      </div>
+                                 </div>
+                              </mat-card>
+                              </a>
+                            </div>
+                        </div>
+                     </div>
+                     </div>
+               </mat-tab>
+               </mat-tab-group>
+
+         </div>
+
+
+
+
+
+       </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,62 @@
+<div class="left-sidebar-wrapper">
+  <div fxLayoutAlign="center"><h2>Creators</h2></div>
+<div class="container">
+  <div class="sidebar-wrapper" fxLayout='row' fxLayout.lt-md="column" fxLayoutAlign="center">
+        <div fxFlex="75" fxFlex.lt-sm="100" class="all-products" ngClass.gt-sm="p-left">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxHide.lt-md="true" class="filter-row mat-elevation-z1 text-muted">
+
+                <div >
+                  <mat-form-field>
+                    <mat-label>Order results</mat-label>
+                    <mat-select>
+                      <mat-option (click)="onChangeSorting('firstName')" value="title">Alphabetically, A-Z</mat-option>
+                      <mat-option (click)="onChangeSorting('-firstName')" value="-title">Alphabetically, Z-A</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+                <div>
+                  <mat-form-field appearance="legacy">
+                    <input matInput placeholder="Search by Creators Name" (keyup)="search($event.target.value)">
+                  </mat-form-field>
+                </div>
+                <div>
+
+                    <button mat-icon-button (click)="changeViewType('list', 100)">
+                        <mat-icon>view_list</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="changeViewType('list', 33.3)">
+                        <mat-icon>view_module</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="changeViewType('list', 25)">
+                        <mat-icon>view_comfy</mat-icon>
+                    </button>
+                </div>
+              </div>
+              <div *ngIf="creators.length > 0" fxLayout="row wrap ">
+                <div fxFlex="100">
+                    <mat-card class="p-0 text-center no-shadow">
+                        <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
+                    </mat-card>
+                </div>
+            </div>
+              <div fxLayout="row wrap" class="products-wrapper">
+                  <div *ngIf="allItemsCount < 1">Search has no results</div>
+                  <div *ngFor="let creator of allItems | paginate: { itemsPerPage: 20, currentPage: page, totalItems: allItemsCount  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+                    <div class="product-box">
+                        <app-creator-list [creator]="creator"></app-creator-list>
+                     </div>
+                  </div>
+              </div>
+
+              <div *ngIf="creators.length > 0" fxLayout="row wrap ">
+                  <div fxFlex="100">
+                      <mat-card class="p-0 text-center no-shadow">
+                          <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
+                      </mat-card>
+                  </div>
+              </div>
+            </div>
+  </div>
+</div>
+</div>

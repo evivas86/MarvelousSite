@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/modules/shared/services/product.service';
-import { ComicService } from '../../services/comic.service';
+import { CreatorService } from '../../services/creator.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product, ColorFilter } from 'src/app/modals/product.model';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -8,14 +7,14 @@ import { Observable, Subject } from 'rxjs';
 
 
 @Component({
-  selector: 'app-comic-left-sidebar',
-  templateUrl: './comic-left-sidebar.component.html',
-  styleUrls: ['./comic-left-sidebar.component.sass']
+  selector: 'app-creator-left-sidebar',
+  templateUrl: './creator-left-sidebar.component.html',
+  styleUrls: ['./creator-left-sidebar.component.sass']
 })
-export class ComicLeftSidebarComponent implements OnInit {
+export class CreatorLeftSidebarComponent implements OnInit {
   public sidenavOpen:boolean = true;
   public animation    :   any;   // Animation
-  public sortByOrder  :   string = 'title';   // sorting
+  public sortByOrder  :   string = 'firstName';   // sorting
   public page:any;
   public tagsFilters  :   any[] = [];
   public viewType: string = 'grid';
@@ -23,42 +22,29 @@ export class ComicLeftSidebarComponent implements OnInit {
   public colorFilters :   ColorFilter[] = [];
 
   public items        :   Product[] = [];
-  public allItems: any[] = [];
-  public allItemsCount: number = 0;
-  public comics: any[] = [];
+  public allItems: any;
+  public allItemsCount: any;
+  public creators: any[] = [];
   public tags         :   any[] = [];
   public colors       :   any[] = [];
   public offset       :   number = 0;
   public Term       :   string = '';
   public Characters       :   string = '';
-  public creators       :   string = '';
-  public cID: string;
-  public crID: string;
-  public creatorName: string;
 
   searchTerms = new Subject<string>();
   comics$: Observable<any>;
   loading: boolean = false;
 
-  constructor(private spinner: NgxSpinnerService, private comicService: ComicService, private productService: ProductService, private route: ActivatedRoute) {
+  constructor(private spinner: NgxSpinnerService, private creatorService: CreatorService, private route: ActivatedRoute) {
     this.spinner.show();
     this.route.params.subscribe(
       (params: Params) => {
-        this.cID = this.route.snapshot.queryParams["cID"];
-        this.crID = this.route.snapshot.queryParams["crID"];
-        if(this.cID){
-          this.Characters = this.cID;
-        }
-        if(this.crID){
-          this.creators = this.crID;
-          this.comicService.getCreator(+this.creators).subscribe(creator => {
-            this.creatorName = creator.data.results[0].fullName;
-             });
-        }
-        this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters,this.creators).subscribe(comics => {
-          this.allItems = comics.data.results;
-          this.allItemsCount = comics.data.total;
-          this.comics = comics.data.results.slice(0.8);
+
+        this.creatorService.getCreators(this.offset,this.sortByOrder,this.Term).subscribe(creator => {
+          console.log(creator);
+          this.allItems = creator.data.results;
+          this.allItemsCount = creator.data.total;
+          this.creators = creator.data.results.slice(0.8);
           this.spinner.hide();
            });
       }
@@ -68,11 +54,11 @@ export class ComicLeftSidebarComponent implements OnInit {
   search(term: string) {
     this.spinner.show();
     this.Term = term;
-    this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters,this.creators).subscribe(comics => {
+    this.creatorService.getCreators(this.offset,this.sortByOrder,this.Term).subscribe(creator => {
       this.allItems = null;
-      this.allItems = comics.data.results;
-      this.allItemsCount = comics.data.total;
-      this.comics = comics.data.results.slice(0.8);
+      this.allItems = creator.data.results;
+      this.allItemsCount = creator.data.total;
+      this.creators = creator.data.results.slice(0.8);
       this.spinner.hide();
        });
   }
@@ -148,10 +134,10 @@ export class ComicLeftSidebarComponent implements OnInit {
       if(val != 'low' && val != 'high'){
         this.spinner.show();
         this.page = 0;
-        this.comicService.getComics(this.page,this.sortByOrder,this.Term,this.Characters,this.creators).subscribe(comics => {
+        this.creatorService.getCreators(this.page,this.sortByOrder,this.Term).subscribe(creator => {
           this.allItems = null;
-          this.allItems = comics.data.results;
-          this.allItemsCount = comics.data.total;
+          this.allItems = creator.data.results;
+          this.allItemsCount = creator.data.total;
           this.spinner.hide();
          });
       }
@@ -186,29 +172,22 @@ public onPageChanged(event){
   this.spinner.show();
   this.page = event;
   this.offset = ( this.page * 20 ) - 20;
-  if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
-    this.sortByOrder = 'title';
-  }
-  this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters,this.creators).subscribe(comics => {
+  this.creatorService.getCreators(this.offset,this.sortByOrder,this.Term).subscribe(creator => {
     this.allItems = null;
-    this.allItems = comics.data.results;
-    this.allItemsCount = comics.data.total;
+    this.allItems = creator.data.results;
+    this.allItemsCount = creator.data.total;
     this.spinner.hide();
      });
   window.scrollTo(0,0);
 }
 
-public getCharacters(characters){
-  console.log(characters);
-  this.Characters = characters;
+public getCharactersByLetter(letter){
+  this.Term = letter;
   this.spinner.show();
-  if(this.sortByOrder == 'low' || this.sortByOrder == 'high'){
-    this.sortByOrder = 'title';
-  }
-  this.comicService.getComics(this.offset,this.sortByOrder,this.Term,this.Characters,this.creators).subscribe(comics => {
+  this.creatorService.getCreators(this.offset,this.sortByOrder,this.Term).subscribe(creator => {
     this.allItems = null;
-    this.allItems = comics.data.results;
-    this.allItemsCount = comics.data.total;
+    this.allItems = creator.data.results;
+    this.allItemsCount = creator.data.total;
     this.spinner.hide();
      });
 }

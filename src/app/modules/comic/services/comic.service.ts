@@ -22,7 +22,7 @@ export class ComicService {
   constructor(private httpClient: HttpClient) {
   }
 
-  private comics(offset: number,sortByOrder: string,term: string, characters: string): Observable<ComicInterface> {
+  private comics(offset: number,sortByOrder: string,term: string, characters: string, creators: string): Observable<ComicInterface> {
     let searchTerm = '';
     if(term == ''){
       searchTerm = '';
@@ -35,11 +35,21 @@ export class ComicService {
     }else{
       searchCharacter = '&sharedAppearances=' + characters;
     }
-    return this.httpClient.get<ComicInterface>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&offset=' + offset + '&orderBy=' + sortByOrder + searchTerm + searchCharacter);
+    let searchCreator = '';
+    if(creators == ''){
+      searchCreator = '';
+    }else{
+      searchCreator = '&creators=' + creators;
+    }
+    return this.httpClient.get<ComicInterface>(this.api + 'comics?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash + '&offset=' + offset + '&orderBy=' + sortByOrder + searchTerm + searchCharacter + searchCreator);
   }
 
   private comic(id: number): Observable<ComicInterface> {
     return this.httpClient.get<ComicInterface>(this.api + 'comics/' + id + '?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
+  }
+
+  private creator(id: number): Observable<any> {
+    return this.httpClient.get<ComicInterface>(this.api + 'creators/' + id + '?apikey=' + this.key + '&ts=' + this.ts + '&hash=' + this.hash);
   }
 
   private comicCharactersById(id: number): Observable<ComicInterface> {
@@ -55,8 +65,12 @@ export class ComicService {
   }
 
     // Get Comics
-    public getComics(offset: number, sortByOrder: string, term: string, characters: string): Observable<ComicInterface> {
-      return this.comics(offset,sortByOrder,term,characters);
+    public getComics(offset: number, sortByOrder: string, term: string, characters: string, creators: string): Observable<ComicInterface> {
+      return this.comics(offset,sortByOrder,term,characters,creators);
+    }
+    
+    public getCreator(creator: number): Observable<any> {
+      return this.creator(creator);
     }
 
     // Get Comics

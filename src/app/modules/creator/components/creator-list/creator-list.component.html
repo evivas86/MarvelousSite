@@ -1,0 +1,40 @@
+<div class="product-item"  >
+  <mat-card fxLayout="column">
+    <div class="character-img">
+        <a [routerLink]="[creator.id]">
+          <img [src]="getImg(creator.thumbnail.path,creator.thumbnail.extension)" alt="">
+       </a>
+    </div>
+     <div class="product-info-wrapper">
+        <span class="category"></span>
+        <div class="title-wrap">
+           <h4>{{creator.fullName}}</h4>
+        </div>
+        <div class="written-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Comics: {{creator.comics.available}}</span>
+        </div>
+        <div class="cover-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <span>Series: {{creator.series.available}}</span>
+        </div>
+        <br>
+        <div class="btn-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+            <a [routerLink]="[creator.id]" >DETAILS</a>
+        </div>
+     </div>
+  </mat-card>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

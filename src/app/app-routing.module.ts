@@ -29,6 +29,10 @@ const appRoutes: Routes = [
     loadChildren: () => import('./modules/serie/serie.module').then(m => m.SerieModule)
   },
   {
+    path: 'creator',
+    loadChildren: () => import('./modules/creator/creator.module').then(m => m.CreatorModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

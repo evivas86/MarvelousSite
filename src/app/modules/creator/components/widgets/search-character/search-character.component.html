@@ -1,0 +1,7 @@
+<div class="category-contant" >
+
+    <button *ngFor="let letter of letters; let i=index" mat-mini-fab [color]="setColor(letter)" (click)="processCharacters(letter)">
+      {{letter.toUpperCase()}}
+    </button>
+
+</div>
