@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-carousel',
@@ -17,28 +18,34 @@ export class MainCarouselComponent implements OnInit {
     clickable: true
   };
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
   ngAfterViewInit(){
     this.config = {
+      observer: true,
+      observeSlideChildren: true,
       slidesPerView: 1,
       spaceBetween: 0,
       keyboard: true,
       navigation: true,
       pagination: this.pagination,
       grabCursor: true,
-      loop: false,
-      preloadImages: false,
+      loop: true,
+      preloadImages: true,
       lazy: true,
       autoplay: {
         delay: 6000,
         disableOnInteraction: false
       },
       speed: 500,
-      effect: "slide"
+      effect: "fade"
     }
+  }
+
+  goTo(url){
+    this.router.navigate([url]);
   }
 
 

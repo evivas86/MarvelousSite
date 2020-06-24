@@ -13,10 +13,6 @@ const appRoutes: Routes = [
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'pages',
-    loadChildren: () => import('./modules/pages/pages.module').then(m => m.PagesModule)
-  },
-  {
     path: 'comic',
     loadChildren: () => import('./modules/comic/comic.module').then(m => m.ComicModule)
   },
@@ -25,13 +21,14 @@ const appRoutes: Routes = [
     loadChildren: () => import('./modules/character/character.module').then(m => m.CharacterModule)
   },
   {
-    path: 'serie',
-    loadChildren: () => import('./modules/serie/serie.module').then(m => m.SerieModule)
-  },
-  {
     path: 'creator',
     loadChildren: () => import('./modules/creator/creator.module').then(m => m.CreatorModule)
   },
+  {
+    path: 'serie',
+    loadChildren: () => import('./modules/serie/serie.module').then(m => m.SerieModule)
+  },
+
   {
     path: '**',
     redirectTo: 'home'

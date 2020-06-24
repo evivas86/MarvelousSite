@@ -150,16 +150,6 @@ export class CharacterDetailsComponent implements OnInit {
     this.router.navigate(['/serie'],{queryParams:{cID:id}});
   }
 
-
-  /*public getRole(fullname: string) {
-    let comicCreators = this.comic.creators.items;
-    for (let index = 0; index < comicCreators.length; index++) {
-      if(comicCreators[index].name == fullname){
-        return comicCreators[index].role;
-      }      
-    }
-  }*/
-
   public setComics(Comics){
     for (let i = 0; i < Comics.length; i++) {
       this.w_flag = 0;

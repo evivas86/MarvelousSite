@@ -4,14 +4,14 @@
           <div class="swiper-wrapper h-100">
             <div *ngFor="let slide of slides" class="swiper-slide" >
 
-                    <div [attr.data-background]="slide.image" class="slide-item swiper-lazy">
+                    <div attr.data-background="^{{slide.image}}" class="slide-item swiper-lazy">
                       <div class="container sl-wrap">
                           <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 
                           <div fxLayout="column" fxLayoutAlign="center left" class="content">
-                            <h1>{{slide.title}}ttt</h1>
+                            <h1>{{slide.title}}</h1>
                             <h3>{{slide.subtitle}}</h3>
-                            <button mat-raised-button color="primary">Shop now</button>
+                            <button mat-raised-button color="primary" (click)="goTo(slide.url)">Go now</button>
                           </div>
                       </div>
 

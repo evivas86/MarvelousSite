@@ -1,6 +1,6 @@
 # Marvelous Site
 
-## Donwload Project
+## Download Project
 
 Clone project with `git cloen https://github.com/evivas86/MarvelousSite.git` in git console.
 

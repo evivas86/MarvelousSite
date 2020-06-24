@@ -166,7 +166,7 @@ h6 {
   color:$grey4;
 }
 .sophia-app .mat-drawer-container {
-background: #fff;
+background: #000;
   position: relative;
   z-index: 1;
   box-sizing: border-box;
@@ -342,7 +342,7 @@ width: 100% !important;
   color: $grey !important;
 }
 .sec-padding {
-  padding: 60px 0;
+  //padding: 60px 0;
 }
 
 .btn-project {
@@ -581,9 +581,10 @@ width: 100% !important;
     height: 100%;
   }
   .main-menu {
+    background-color: black !important;
     a {
       text-transform: uppercase;
-      color: $grey7;
+      color: white !important;
     }
   }
   .call-bucket-wrap {
@@ -999,7 +1000,7 @@ width: 100% !important;
 ****************************************/
 .home-1-wrap {
   .categories {
-    background: $white;
+    background: darkgrey;
     .title {
       position: relative;
       margin-bottom: 15px;
@@ -4281,3 +4282,57 @@ button.swipe-arrow {
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
   color: $theme-main !important;
 }
+
+footer{
+  background-color: black !important;
+  color: white !important;
+  padding: 60px 0;
+  .container{
+    background-color: black !important;
+    .footer-wrapper{
+      .footer-widget{
+        p{
+          color: white !important;
+        }
+        a{
+          color: white !important;
+        }
+      }
+
+    }
+  }
+}
+
+.home-header{
+  background-color: black !important;
+  .container{
+    background-color: black !important;
+  }
+}
+.mat-drawer-container {
+  .main-menu{
+    color: #fff !important;
+  }
+
+}
+.module-title{
+  background-color: darkgrey !important;
+}
+.left-sidebar-wrapper{ 
+  .all-products {
+    background: darkgray !important;
+  }
+  .filter-row {
+    background: darkgray !important;
+  }
+}
+.mat-card {
+  background: darkgray !important;
+}
+.ngx-pagination .disabled {
+  color: unset !important;
+}
+mat-expansion-panel {
+  background-color: darkgray !important;
+}
+ 
