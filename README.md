@@ -1,13 +1,14 @@
 # Marvelous Site
 
-## Donwload Project
+## Download Project
 
 Clone project with `git cloen https://github.com/evivas86/MarvelousSite.git` in git console.
 
 ## Config Project
 
-1.- Install `node_modules` dependencies with `npm install`.
-2.- Install `@angular/cli` dependencies with `npm install @angular/cli@9.0.0`.
+Install `node_modules` dependencies with `npm install`.
+
+Install `@angular/cli` dependencies with `npm install @angular/cli@9.0.0`.
 
 ## Development server
 
