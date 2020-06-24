@@ -8,24 +8,10 @@
 <div class="home-header">
   <div class="container" >
     <div class="header-wrapper" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center" >
-        <div class="logo marvel-logo-div">
+      <app-menu></app-menu>  
+      <div class="logo marvel-logo-div">
             <a [routerLink]="['/home']" routerLinkActive="router-link-active" class="marvel marvel-logo-text">MARVELOUS SITE</a>
         </div>
-        <app-menu></app-menu>
-
-        <div class="call-bucket-wrap" fxLayout="row" fxLayout.sm="row" fxLayoutAlign="center center" >
-
-            <div class="main-menu-wrapper-2" fxLayout="row"  fxLayoutAlign="space-between center" >
-                <mat-toolbar class="top-navbar top menu">
-                    <div fxflexoffset.gt-sm="10"  fxFlex class="search-form">
-
-                       </div>
-                       <div class="devider2">
-
-                       </div>
-                </mat-toolbar>
-              </div>
-          </div>
 
 
     </div>
