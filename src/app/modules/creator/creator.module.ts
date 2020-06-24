@@ -19,6 +19,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 import { from } from 'rxjs';
 
+import { SearchCharacterComponent } from './components/widgets/search-character/search-character.component';
 import { CreatorZoomComponent } from './components/creator-details/creator-zoom/creator-zoom.component';
 
 
@@ -27,7 +28,8 @@ import { CreatorZoomComponent } from './components/creator-details/creator-zoom/
     CreatorListComponent,
     CreatorDetailsComponent,
     CreatorLeftSidebarComponent,
-    CreatorZoomComponent
+    CreatorZoomComponent,
+    SearchCharacterComponent
   ],
   imports: [
     CommonModule,

@@ -21,7 +21,7 @@ import { CharacterFilterComponent } from './components/widgets/character-filter/
 import { TypeFilterComponent } from './components/widgets/type-filter/type-filter.component';
 import { YearFilterComponent } from './components/widgets/year-filter/year-filter.component';
 import { RatingFilterComponent } from './components/widgets/rating-filter/rating-filter.component';
-import {MultiDatepickerModule} from './components/widgets/year-filter/multidatepicker/multidatepicker.module';
+import {MultiDatepickerModule} from './components/widgets/year-filter/datepicker/multidatepicker.module';
 
 
 @NgModule({

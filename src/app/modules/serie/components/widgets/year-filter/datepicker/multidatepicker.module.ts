@@ -9,10 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter/';
 import { MultiDatepickerComponent } from './multidatepicker.component';
-import { YearPickerComponent } from './year-picker-component/year-picker.component';
-import { MonthPickerComponent } from './month-picker-component/month-picker.component';
-import { RegularDatepickerComponent } from './regular-datepicker-component/regular-datepicker.component';
-import { InfoDialogComponent } from './month-picker-component/dialog/info-dialog/info-dialog.component';
+import { YearPickerComponent } from './year-picker/year-picker.component';
+import { MonthPickerComponent } from './month-picker/month-picker.component';
+import { RegularDatepickerComponent } from './regular-picker/regular-datepicker.component';
+import { InfoDialogComponent } from './month-picker/dialog/info-dialog/info-dialog.component';
 
 @NgModule({
   imports: [
