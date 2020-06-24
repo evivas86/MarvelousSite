@@ -21,7 +21,7 @@ import { MatDatepicker} from '@angular/material/datepicker';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import { MultiDatepickerComponent } from '../multidatepicker.component';
-import { InfoDialogComponent } from './dialog/info-dialog/info-dialog.component';
+import { InfoDialogComponent } from './dialog/info-dialog.component';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`

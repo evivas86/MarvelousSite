@@ -12,7 +12,7 @@ import { MultiDatepickerComponent } from './multidatepicker.component';
 import { YearPickerComponent } from './year-picker/year-picker.component';
 import { MonthPickerComponent } from './month-picker/month-picker.component';
 import { RegularDatepickerComponent } from './regular-picker/regular-datepicker.component';
-import { InfoDialogComponent } from './month-picker/dialog/info-dialog/info-dialog.component';
+import { InfoDialogComponent } from './month-picker/dialog/info-dialog.component';
 
 @NgModule({
   imports: [
