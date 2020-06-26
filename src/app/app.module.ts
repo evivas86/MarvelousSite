@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxImgZoomModule } from 'ngx-img-zoom';
 
-import { MainComponent } from './modules/main/main.component';
 
 
 
@@ -18,7 +17,6 @@ import { SharedModule } from './modules/shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
   ],
   imports: [
     NgxSpinnerModule,

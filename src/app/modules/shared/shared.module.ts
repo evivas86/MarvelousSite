@@ -27,16 +27,8 @@ import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menu/menu.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { ProductService } from './services/product.service';
-import { CartService } from './services/cart.service';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { BannersComponent } from './banners/banners.component';
-import { ShoppingWidgetsComponent } from './shopping-widgets/shopping-widgets.component';
 import { BlogSectionComponent } from './blog-section/blog-section.component';
-import { BannerPromotionComponent } from './banner-promotion/banner-promotion.component';
-import { CategoriesMenuComponent } from './categories-menu/categories-menu.component';
-import { CategoriesSectionComponent } from './categories-section/categories-section.component';
-import { FooterTwoComponent } from './footer-two/footer-two.component';
-import { InfoBarComponent } from './info-bar/info-bar.component';
 
 
 
@@ -47,14 +39,7 @@ import { InfoBarComponent } from './info-bar/info-bar.component';
     MenuComponent,
     SidebarComponent,
     OrderByPipe,
-    BannersComponent,
-    ShoppingWidgetsComponent,
-    BlogSectionComponent,
-    BannerPromotionComponent,
-    CategoriesMenuComponent,
-    CategoriesSectionComponent,
-    FooterTwoComponent,
-    InfoBarComponent
+    BlogSectionComponent
   ],
   imports: [
     CommonModule,
@@ -104,20 +89,12 @@ import { InfoBarComponent } from './info-bar/info-bar.component';
     FooterComponent,
     MenuComponent,
     SidebarComponent,
-    BannersComponent,
     FlexLayoutModule,
-    ShoppingWidgetsComponent,
-    BlogSectionComponent,
-    BannerPromotionComponent,
-    CategoriesMenuComponent,
-    CategoriesSectionComponent,
-    FooterTwoComponent,
-    InfoBarComponent
+    BlogSectionComponent
 
   ],
   providers: [
     ProductService,
-    CartService
   ]
 })
 export class SharedModule {}
