@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://gateway.marvel.com/v1/public/',
+  api_url: 'https://gateway.marvel.com/v1/public/',
   api_key: 'b73c9c7df9eb2826c332f884791027fe',
   ts: '86',
   hash: '9d49c3049bb9586615511c426509e9d6',
